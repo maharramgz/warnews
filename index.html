@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PeaceMonitor | Conflict Intel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PeaceMonitor | Mobile Optimized</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,80 +22,99 @@
             --font: 'Poppins', sans-serif;
         }
 
-        * { box-sizing: border-box; transition: all 0.2s ease-out; }
+        * { box-sizing: border-box; transition: all 0.2s ease-out; -webkit-tap-highlight-color: transparent; }
 
         body {
-            margin: 0; padding: 0; height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
             background-color: var(--bg-body);
             color: var(--text-primary);
             font-family: var(--font);
             display: flex; flex-direction: column;
-            overflow: hidden;
         }
 
         header {
-            flex-shrink: 0; height: 80px; padding: 0 32px;
+            flex-shrink: 0; height: auto; min-height: 70px; padding: 12px 20px;
             background-color: var(--bg-panel);
             border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
 
         .cute-logo-icon {
-            width: 44px; height: 44px;
+            width: 36px; height: 36px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
-            border-radius: 14px;
+            border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 12px rgba(112, 214, 255, 0.15);
         }
-        .cute-logo-icon::before {
-            content: ""; width: 14px; height: 14px;
-            border-radius: 5px; background: rgba(17, 20, 24, 0.7);
-        }
+        .cute-logo-icon::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: rgba(17, 20, 24, 0.7); }
 
-        .brand-name { font-size: 1.5rem; font-weight: 700; letter-spacing: -1.5px; color: var(--text-primary); }
+        .brand-name { font-size: 1.2rem; font-weight: 700; letter-spacing: -1px; color: var(--text-primary); }
         .brand-name span { color: var(--accent-blue); font-weight: 500; }
 
-        .header-controls { display: flex; align-items: center; gap: 20px; }
-        
-        .system-status { font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 20px; }
+        .header-controls { display: flex; align-items: center; gap: 12px; margin-top: 8px; width: 100%; justify-content: space-between; }
+
+        .system-status { font-size: 0.65rem; font-weight: 600; color: var(--text-secondary); background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 20px; }
 
         .lang-btn {
             background: rgba(112, 214, 255, 0.1); color: var(--accent-blue);
             border: 1px solid rgba(112, 214, 255, 0.2);
-            padding: 10px 20px; border-radius: 12px;
-            font-family: inherit; font-weight: 600; font-size: 0.8rem; cursor: pointer;
+            padding: 8px 14px; border-radius: 10px;
+            font-family: inherit; font-weight: 600; font-size: 0.75rem; cursor: pointer;
         }
-        .lang-btn:hover { background: var(--accent-blue); color: #111; }
-        .lang-btn.loading { opacity: 0.5; cursor: wait; }
 
-        .cute-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px 32px; flex-grow: 1; overflow: hidden; }
+        /* GRID SYSTEM: Responsive */
+        .cute-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px; padding: 20px;
+            flex-grow: 1;
+        }
 
-        .sector-column { background-color: var(--bg-panel); border-radius: var(--radius-outer); display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border); }
+        .sector-column {
+            background-color: var(--bg-panel);
+            border-radius: var(--radius-outer);
+            display: flex; flex-direction: column;
+            border: 1px solid var(--border);
+            min-height: 400px;
+        }
 
-        .sector-header { padding: 20px 24px; font-weight: 700; font-size: 0.9rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .sector-header { padding: 16px 20px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-        .cute-feed { padding: 16px 20px; overflow-y: auto; flex-grow: 1; height: 0; }
+        .cute-feed { padding: 12px; overflow-y: auto; flex-grow: 1; }
 
-        .cute-card { background-color: var(--bg-card); border-radius: var(--radius-inner); padding: 18px; margin-bottom: 16px; border: 1px solid var(--border); }
-        .cute-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.1); background: #2a2e34; }
+        .cute-card { background-color: var(--bg-card); border-radius: var(--radius-inner); padding: 15px; margin-bottom: 12px; border: 1px solid var(--border); }
 
-        .card-headline { font-size: 0.95rem; font-weight: 500; line-height: 1.5; color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 10px; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; font-weight: 600; }
-        .source { color: var(--accent-mint); background: rgba(152, 255, 152, 0.05); padding: 4px 8px; border-radius: 6px; }
-        .time { color: var(--text-secondary); }
+        .card-headline { font-size: 0.9rem; font-weight: 500; line-height: 1.4; color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 8px; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; font-weight: 600; }
+        .source { color: var(--accent-mint); background: rgba(152, 255, 152, 0.05); padding: 3px 6px; border-radius: 4px; }
 
-        .cute-feed::-webkit-scrollbar { width: 4px; }
-        .cute-feed::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 10px; }
-
-        .signature { position: fixed; bottom: 12px; right: 24px; font-size: 0.65rem; font-weight: 500; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 0.05em; pointer-events: none; z-index: 100; }
+        .signature { 
+            padding: 15px; text-align: center; font-size: 0.6rem; 
+            font-weight: 500; color: rgba(255,255,255,0.2); 
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
         .signature span { color: rgba(112, 214, 255, 0.4); }
 
-        @media (max-width: 1200px) {
-            .cute-grid { grid-template-columns: repeat(2, 1fr); overflow-y: auto; }
-            .sector-column { min-height: 450px; }
+        /* MOBILE OPTIMIZATION (Phones) */
+        @media (max-width: 768px) {
+            header { height: auto; }
+            .header-controls { width: auto; margin-top: 0; }
+            .cute-grid { 
+                grid-template-columns: 1fr; /* Stack columns vertically */
+                padding: 10px; gap: 15px; 
+            }
+            .sector-column { min-height: auto; max-height: 600px; }
+            .brand-name { font-size: 1.1rem; }
+            .signature { position: static; margin-bottom: 10px; }
+        }
+
+        /* TABLET OPTIMIZATION */
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .cute-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -107,27 +126,27 @@
         <div class="brand-name">Peace<span>Monitor</span></div>
     </div>
     <div class="header-controls">
-        <div class="system-status">STATUS: <span id="sync-time" style="color:var(--accent-status)">LINKING...</span></div>
-        <button class="lang-btn" id="lang-toggle" onclick="toggleFullPageLanguage()">TÜRKÇE'YE ÇEVİR</button>
+        <div class="system-status" id="sync-time">LINKING...</div>
+        <button class="lang-btn" id="lang-toggle" onclick="toggleFullPageLanguage()">TÜRKÇE</button>
     </div>
 </header>
 
 <main class="cute-grid">
     <div class="sector-column">
         <div class="sector-header"><div class="dot" style="background:var(--accent-blue)"></div> <span id="title-israel">ISRAEL SECTOR</span></div>
-        <div class="cute-feed" id="feed-israel">Loading...</div>
+        <div class="cute-feed" id="feed-israel">...</div>
     </div>
     <div class="sector-column">
         <div class="sector-header"><div class="dot" style="background:var(--accent-pink)"></div> <span id="title-iran">IRAN SECTOR</span></div>
-        <div class="cute-feed" id="feed-iran">Loading...</div>
+        <div class="cute-feed" id="feed-iran">...</div>
     </div>
     <div class="sector-column">
         <div class="sector-header"><div class="dot" style="background:var(--accent-mint)"></div> <span id="title-usa">USA / PENTAGON</span></div>
-        <div class="cute-feed" id="feed-usa">Loading...</div>
+        <div class="cute-feed" id="feed-usa">...</div>
     </div>
     <div class="sector-column">
         <div class="sector-header"><div class="dot" style="background:#ddd"></div> <span id="title-intl">GLOBAL / UN</span></div>
-        <div class="cute-feed" id="feed-intl">Loading...</div>
+        <div class="cute-feed" id="feed-intl">...</div>
     </div>
 </main>
 
@@ -137,8 +156,8 @@
     let newsData = [];
     let isTurkish = false;
     const labels = {
-        EN: { israel: "ISRAEL SECTOR", iran: "IRAN SECTOR", usa: "USA SECTOR", intl: "GLOBAL NEWS", btn: "TÜRKÇE'YE ÇEVİR" },
-        TR: { israel: "İSRAİL SEKTÖRÜ", iran: "İRAN SEKTÖRÜ", usa: "ABD SEKTÖRÜ", intl: "KÜRESEL HABERLER", btn: "ENGLISH VERSION" }
+        EN: { israel: "ISRAEL SECTOR", iran: "IRAN SECTOR", usa: "USA SECTOR", intl: "GLOBAL NEWS", btn: "TÜRKÇE" },
+        TR: { israel: "İSRAİL SEKTÖRÜ", iran: "İRAN SEKTÖRÜ", usa: "ABD SEKTÖRÜ", intl: "KÜRESEL HABERLER", btn: "ENGLISH" }
     };
 
     async function fetchLatestUpdates() {
@@ -149,7 +168,7 @@
             if (data.articles) {
                 newsData = data.articles;
                 render();
-                syncEl.innerText = `LIVE // ${new Date().toLocaleTimeString().toUpperCase()}`;
+                syncEl.innerText = `LIVE // ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
             }
         } catch (e) {
             syncEl.innerText = "OFFLINE";
@@ -166,13 +185,9 @@
 
     async function toggleFullPageLanguage() {
         const btn = document.getElementById('lang-toggle');
-        if (btn.classList.contains('loading')) return;
-
         isTurkish = !isTurkish;
-        btn.classList.add('loading');
         btn.innerText = "Loading...";
 
-        // Update Headers
         const lang = isTurkish ? 'TR' : 'EN';
         document.getElementById('title-israel').innerText = labels[lang].israel;
         document.getElementById('title-iran').innerText = labels[lang].iran;
@@ -180,17 +195,12 @@
         document.getElementById('title-intl').innerText = labels[lang].intl;
         btn.innerText = labels[lang].btn;
 
-        // If switching to Turkish, translate everything in newsData if not already done
         if (isTurkish) {
             for (let art of newsData) {
-                if (!art.translatedTitle) {
-                    art.translatedTitle = await translateText(art.title);
-                }
+                if (!art.translatedTitle) art.translatedTitle = await translateText(art.title);
             }
         }
-
         render();
-        btn.classList.remove('loading');
     }
 
     function render() {
@@ -200,19 +210,16 @@
             usa: document.getElementById('feed-usa'),
             intl: document.getElementById('feed-intl')
         };
-
         Object.values(containers).forEach(c => c.innerHTML = "");
 
         newsData.forEach(art => {
             const searchText = (art.title + " " + (art.description || "")).toLowerCase();
             let cat = 'intl';
-
             if (searchText.includes('israel') || searchText.includes('idf')) cat = 'israel';
             else if (searchText.includes('iran') || searchText.includes('tehran')) cat = 'iran';
             else if (searchText.includes('usa') || searchText.includes('pentagon')) cat = 'usa';
 
             const displayTitle = isTurkish ? (art.translatedTitle || art.title) : art.title;
-
             const item = document.createElement('div');
             item.className = 'cute-card';
             item.innerHTML = `
