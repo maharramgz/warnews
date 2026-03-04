@@ -30,6 +30,8 @@
             color: var(--text-primary);
             font-family: var(--font);
             display: flex; flex-direction: column;
+            /* Allow the whole body to scroll naturally */
+            overflow-y: auto; 
         }
 
         header {
@@ -54,7 +56,7 @@
         .brand-name { font-size: 1.2rem; font-weight: 700; letter-spacing: -1px; color: var(--text-primary); }
         .brand-name span { color: var(--accent-blue); font-weight: 500; }
 
-        .header-controls { display: flex; align-items: center; gap: 12px; margin-top: 8px; width: 100%; justify-content: space-between; }
+        .header-controls { display: flex; align-items: center; gap: 12px; }
 
         .system-status { font-size: 0.65rem; font-weight: 600; color: var(--text-secondary); background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 20px; }
 
@@ -65,7 +67,6 @@
             font-family: inherit; font-weight: 600; font-size: 0.75rem; cursor: pointer;
         }
 
-        /* GRID SYSTEM: Responsive */
         .cute-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -78,13 +79,14 @@
             border-radius: var(--radius-outer);
             display: flex; flex-direction: column;
             border: 1px solid var(--border);
-            min-height: 400px;
+            /* Remove fixed heights to allow natural expansion */
+            height: fit-content;
         }
 
         .sector-header { padding: 16px 20px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
         .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-        .cute-feed { padding: 12px; overflow-y: auto; flex-grow: 1; }
+        .cute-feed { padding: 12px; }
 
         .cute-card { background-color: var(--bg-card); border-radius: var(--radius-inner); padding: 15px; margin-bottom: 12px; border: 1px solid var(--border); }
 
@@ -93,26 +95,25 @@
         .source { color: var(--accent-mint); background: rgba(152, 255, 152, 0.05); padding: 3px 6px; border-radius: 4px; }
 
         .signature { 
-            padding: 15px; text-align: center; font-size: 0.6rem; 
+            padding: 30px 15px; text-align: center; font-size: 0.6rem; 
             font-weight: 500; color: rgba(255,255,255,0.2); 
             text-transform: uppercase; letter-spacing: 0.1em;
         }
         .signature span { color: rgba(112, 214, 255, 0.4); }
 
-        /* MOBILE OPTIMIZATION (Phones) */
+        /* MOBILE FIX */
         @media (max-width: 768px) {
-            header { height: auto; }
-            .header-controls { width: auto; margin-top: 0; }
             .cute-grid { 
-                grid-template-columns: 1fr; /* Stack columns vertically */
-                padding: 10px; gap: 15px; 
+                grid-template-columns: 1fr; 
+                padding: 15px; gap: 20px; 
             }
-            .sector-column { min-height: auto; max-height: 600px; }
+            .sector-column { height: auto; }
             .brand-name { font-size: 1.1rem; }
-            .signature { position: static; margin-bottom: 10px; }
+            /* Keep signature visible at the bottom of the long scroll */
+            .signature { position: relative; }
         }
 
-        /* TABLET OPTIMIZATION */
+        /* TABLET */
         @media (min-width: 769px) and (max-width: 1200px) {
             .cute-grid { grid-template-columns: 1fr 1fr; }
         }
